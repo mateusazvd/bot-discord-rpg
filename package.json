@@ -1,0 +1,24 @@
+{
+  "name": "bot-rpg-2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node src/index.ts",
+    "build": " tsc src/index.ts",
+    "start": "tsc src/index.ts && node ."
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  },
+  "dependencies": {
+    "colors": "^1.4.0",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "ts-lib": "^0.0.5",
+    "ts-node": "^10.9.2"
+  }
+}
