@@ -1,19 +1,19 @@
-import {ExtendedClient} from "./structs/ExtendedClient"
+import { ExtendedClient } from "./structs/ExtendedClient"
 export * from "colors"
+import config from "./config.json";
+import { DiceCommands } from "./utils/DicesCommands";
+import { connect } from "./db/Database";
 
 const client = new ExtendedClient();
 client.start()
 
-export {client}
+export { client, config }
 
-client.on("ready",()=>{
-    console.log("Bot online".red);
-})
 
-client.on("messageCreate",(message)=>{
-    if(message.author.id == client.user?.id) return;
-
+client.on("messageCreate", async (message) => {
+    const diceResponse = DiceCommands(message.content)
+    if (!diceResponse) return
     message.reply({
-        content:`olá ${message.author.username}`
+        content: `${diceResponse}`
     })
 })
