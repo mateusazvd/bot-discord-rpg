@@ -26,3 +26,11 @@ interface IInformation {
     infoContent: string
     infoImg?: string
 }
+
+interface IItem {
+    name: string
+    description: string
+    image: string
+    rarity: string
+    weight: string
+}

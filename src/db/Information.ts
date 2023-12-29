@@ -2,7 +2,7 @@ import { connect } from "./Database"
 
 
 
-export async function createInfo(information: IInformation) {
+export async function createInfo(information: any) {
     const db = await connect();
     return db.collection('information').insertOne(information);
 }

@@ -1,5 +1,7 @@
 import { ActionRowBuilder, ApplicationCommandOptionType, ApplicationCommandType, Collection, EmbedBuilder } from "discord.js";
 import { Command } from "../../structs/types/command";
+import { InformationEmbed } from "../../templates/InformationTemplates";
+import { createInfo } from "../../db/Information";
 
 export default new Command({
     name: "information",
@@ -23,6 +25,12 @@ export default new Command({
                     description: "Conteudo da carta de informação",
                     type: ApplicationCommandOptionType.String,
                     required: true
+                },
+                {
+                    name: "image",
+                    description: "Imagem da Informação",
+                    type: ApplicationCommandOptionType.String,
+                    required: true
                 }
             ]
         }
@@ -31,34 +39,16 @@ export default new Command({
     async run({ interaction, options }) {
 
         const subcommand = options.getSubcommand()
-
-        console.log(subcommand);
-
-        const exampleEmbed = new EmbedBuilder()
-            .setColor(0x0099FF)
-            .setTitle('Some title')
-            .setURL('https://discord.js.org/')
-            .setAuthor({ name: 'Some name', iconURL: 'https://i.imgur.com/AfFp7pu.png', url: 'https://discord.js.org' })
-            .setDescription('Some description here')
-            .setThumbnail('https://i.imgur.com/AfFp7pu.png')
-            .addFields(
-                { name: 'Regular field title', value: 'Some value here' },
-                { name: '\u200B', value: '\u200B' },
-                { name: 'Inline field title', value: 'Some value here', inline: true },
-                { name: 'Inline field title', value: 'Some value here', inline: true },
-            )
-            .addFields({ name: 'Inline field title', value: 'Some value here', inline: true })
-            .setImage('https://i.imgur.com/AfFp7pu.png')
-            .setTimestamp()
-            .setFooter({ text: 'Some footer text here', iconURL: 'https://i.imgur.com/AfFp7pu.png' });
-
         switch (subcommand) {
             case 'create':
-                let title = options.getString("title")
-                let content = options.getString("content")
+                let title = options.getString("title") || ""
+                let content = options.getString("content") || ""
+                let urlImg = options.getString("image") || ""
+                createInfo({ infoTitle: title, infoContent: content, infoImg: urlImg })
+
                 console.log(title, content);
 
-                interaction.reply({ content: `${title} \n ${content}`, ephemeral: true, embeds: [exampleEmbed] })
+                interaction.reply({ ephemeral: true, embeds: [InformationEmbed(title, content, urlImg)] })
                 break;
 
             default:
